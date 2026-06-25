@@ -1,0 +1,187 @@
+name: PR Template Check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-pr-template:
+    runs-on: ubuntu-latest
+    name: Check PR Template Usage
+
+    steps:
+      - name: Check PR Description
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prBody = context.payload.pull_request.body || '';
+            const prTitle = context.payload.pull_request.title || '';
+
+            // Check if PR has a meaningful description
+            if (prBody.length < 50) {
+              core.setFailed('❌ PR description is too short. Please use one of the available PR templates and provide more details.');
+              return;
+            }
+
+            // Check for template indicators
+            const hasChecklist = prBody.includes('- [ ]') || prBody.includes('- [x]');
+            const hasDescription = prBody.includes('## Description') || prBody.includes('## Summary') || prBody.includes('## Feature Overview') || prBody.includes('## Bug Description');
+            const hasTestingSection = prBody.includes('## Testing') || prBody.includes('## Test Coverage') || prBody.includes('## Testing Strategy');
+
+            let score = 0;
+            let feedback = [];
+
+            if (hasDescription) {
+              score += 1;
+              feedback.push('✅ Has description section');
+            } else {
+              feedback.push('❌ Missing description section');
+            }
+
+            if (hasTestingSection) {
+              score += 1;
+              feedback.push('✅ Has testing section');
+            } else {
+              feedback.push('❌ Missing testing section');
+            }
+
+            if (hasChecklist) {
+              score += 1;
+              feedback.push('✅ Has checklist items');
+            } else {
+              feedback.push('❌ Missing checklist items');
+            }
+
+            // Check PR title format
+            const titlePatterns = [
+              /^feat(\(.+\))?: .+/,
+              /^fix(\(.+\))?: .+/,
+              /^docs(\(.+\))?: .+/,
+              /^style(\(.+\))?: .+/,
+              /^refactor(\(.+\))?: .+/,
+              /^test(\(.+\))?: .+/,
+              /^chore(\(.+\))?: .+/,
+              /^perf(\(.+\))?: .+/,
+              /^ci(\(.+\))?: .+/,
+              /^build(\(.+\))?: .+/,
+              /^revert(\(.+\))?: .+/
+            ];
+
+            const hasGoodTitle = titlePatterns.some(pattern => pattern.test(prTitle));
+
+            if (hasGoodTitle) {
+              score += 1;
+              feedback.push('✅ Title follows conventional commit format');
+            } else {
+              feedback.push('❌ Title should follow format: type(scope): description');
+            }
+
+            // Generate feedback comment
+            const feedbackText = feedback.join('\n');
+            const finalMessage = score < 3 ?
+              '**⚠️ Consider improving your PR description using one of our templates for better review experience.**' :
+              '**🎉 Great job following PR best practices!**';
+
+            const commentLines = [
+              '## 📋 PR Template Check Results',
+              '',
+              `**Score: ${score}/4**`,
+              '',
+              feedbackText,
+              '',
+              '### 📝 Available Templates:',
+              '- **Simple changes:** Add `?template=simple.md` to your PR URL',
+              '- **Bug fixes:** Add `?template=bug_fix.md` to your PR URL',
+              '- **New features:** Add `?template=feature.md` to your PR URL',
+              '- **Comprehensive:** Default template is used automatically',
+              '',
+              '### 💡 Tips:',
+              '- Include clear description of what and why',
+              '- Add testing information',
+              '- Use checklists for verification steps',
+              '- Follow conventional commit format for titles',
+              '',
+              finalMessage
+            ];
+
+            const commentBody = commentLines.join('\n');
+
+            // Only fail if score is very low
+            if (score < 2) {
+              core.setFailed('PR does not meet minimum template requirements. Please improve the description.');
+            }
+
+            // Post comment with feedback
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });
+
+  check-pr-size:
+    runs-on: ubuntu-latest
+    name: Check PR Size
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR Size
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Get PR files
+            const files = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            const totalChanges = files.data.reduce((sum, file) => sum + file.additions + file.deletions, 0);
+            const fileCount = files.data.length;
+
+            let size = 'Small';
+            let emoji = '🟢';
+            let recommendation = '';
+
+            if (totalChanges > 1000 || fileCount > 20) {
+              size = 'Extra Large';
+              emoji = '🔴';
+              recommendation = '\n\n**⚠️ Consider breaking this PR into smaller, focused changes for easier review.**';
+            } else if (totalChanges > 500 || fileCount > 15) {
+              size = 'Large';
+              emoji = '🟠';
+              recommendation = '\n\n**💡 This is a large PR. Consider if it can be split into smaller pieces.**';
+            } else if (totalChanges > 200 || fileCount > 10) {
+              size = 'Medium';
+              emoji = '🟡';
+            }
+
+            const commentLines = [
+              '## 📊 PR Size Analysis',
+              '',
+              `${emoji} **Size:** ${size}`,
+              `- **Files changed:** ${fileCount}`,
+              `- **Total changes:** ${totalChanges} lines`,
+              recommendation,
+              '',
+              '### 📈 Size Guidelines:',
+              '- 🟢 Small (< 200 lines, < 10 files) - Ideal for quick reviews',
+              '- 🟡 Medium (200-500 lines, 10-15 files) - Good size',
+              '- 🟠 Large (500-1000 lines, 15-20 files) - Consider splitting',
+              '- 🔴 Extra Large (> 1000 lines, > 20 files) - Should be broken down'
+            ];
+
+            const commentBody = commentLines.join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentBody
+            });

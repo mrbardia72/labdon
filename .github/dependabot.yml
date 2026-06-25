@@ -1,0 +1,150 @@
+# Dependabot configuration for automated dependency updates
+# Documentation: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Go modules configuration
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Tehran"
+    # Maximum number of open pull requests (default: 5)
+    open-pull-requests-limit: 10
+    # Target branch for pull requests
+    target-branch: "main"
+    # Pull request branch naming
+    pull-request-branch-name:
+      separator: "-"
+    # Commit message configuration
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    # Auto-merge configuration
+    rebase-strategy: "auto"
+    # Assignees for PRs
+    assignees:
+      - "bittip"
+    # Labels to add to PRs
+    labels:
+      - "dependencies"
+      - "go"
+      - "automated"
+      - "daily-update"
+    # Milestone to associate PRs with
+    milestone: 1
+    # Allow both direct and indirect dependencies
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    # Ignore major version updates for critical dependencies
+    ignore:
+      # Database drivers - major versions might have breaking changes
+      - dependency-name: "github.com/jackc/pgx/v5"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "github.com/jmoiron/sqlx"
+        update-types: ["version-update:semver-major"]
+
+    # Group related dependencies together
+    groups:
+      # Database-related dependencies
+      database:
+        patterns:
+          - "github.com/jackc/*"
+          - "github.com/jmoiron/sqlx"
+          - "github.com/lib/pq"
+        update-types:
+          - "minor"
+          - "patch"
+      # Telegram bot dependencies
+      telegram:
+        patterns:
+          - "github.com/go-telegram-bot-api/*"
+          - "*telegram*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Web scraping dependencies
+      scraping:
+        patterns:
+          - "github.com/PuerkitoBio/goquery"
+          - "golang.org/x/net"
+        update-types:
+          - "minor"
+          - "patch"
+      # Development tools
+      development:
+        patterns:
+          - "github.com/ardanlabs/*"
+          - "github.com/robfig/cron/*"
+        update-types:
+          - "minor"
+          - "patch"
+      # Testing dependencies
+      testing:
+        patterns:
+          - "github.com/stretchr/testify"
+          - "*test*"
+          - "*mock*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Vendor updates (if using vendor directory)
+    vendor: true
+    # Security updates configuration
+    insecure-external-code-execution: deny
+
+  # GitHub Actions workflow dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Tehran"
+    open-pull-requests-limit: 5
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "ci/cd"
+      - "daily-update"
+    assignees:
+      - "bittip"
+    # Group all GitHub Actions updates together
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Docker dependencies (if you have Dockerfile)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Asia/Tehran"
+    open-pull-requests-limit: 3
+    pull-request-branch-name:
+      separator: "-"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "docker"
+      - "daily-update"
+    assignees:
+      - "bittip"
+    # Only update base images, not build stage images
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
