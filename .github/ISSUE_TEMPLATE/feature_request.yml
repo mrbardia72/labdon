@@ -152,7 +152,7 @@ body:
       label: 📊 Impact Areas
       description: Which areas of the system would this feature affect?
       options:
-        - label: Web Scraping (GolangWeekly/PostgresWeekly)
+        - label: Web Scraping 
         - label: Database Schema
         - label: API Endpoints
         - label: Bot/Automation Jobs

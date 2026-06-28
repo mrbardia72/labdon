@@ -26,7 +26,7 @@ updates:
     rebase-strategy: "auto"
     # Assignees for PRs
     assignees:
-      - "bittip"
+      - "mrbardia72"
     # Labels to add to PRs
     labels:
       - "dependencies"
@@ -116,7 +116,7 @@ updates:
       - "ci/cd"
       - "daily-update"
     assignees:
-      - "bittip"
+      - "mrbardia72"
     # Group all GitHub Actions updates together
     groups:
       github-actions:
@@ -142,7 +142,7 @@ updates:
       - "docker"
       - "daily-update"
     assignees:
-      - "bittip"
+      - "mrbardia72"
     # Only update base images, not build stage images
     ignore:
       - dependency-name: "*"

@@ -1,14 +1,14 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 GitHub Discussions
-    url: https://github.com/labdon_site/labdon_site/discussions
+    url: https://github.com/A/B/discussions
     about: Ask questions and discuss ideas with the community
   - name: 📚 Documentation
-    url: https://github.com/labdon_site/labdon_site/blob/main/README.md
+    url: https://github.com/A/B/blob/main/README.md
     about: Check our documentation and guides
   - name: 🔒 Security Vulnerability
-    url: https://github.com/labdon_site/labdon_site/security/advisories/new
+    url: https://github.com/A/B/security/advisories/new
     about: Report security vulnerabilities privately
   - name: ❓ General Questions
-    url: https://github.com/labdon_site/labdon_site/discussions/categories/q-a
+    url: https://github.com/A/B/discussions/categories/q-a
     about: Ask general questions about the project

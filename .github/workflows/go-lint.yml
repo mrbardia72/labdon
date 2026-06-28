@@ -2,15 +2,15 @@ name: Go Linting & Code Quality
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
   schedule:
     # Run weekly on Sundays at 2 AM UTC
     - cron: "0 2 * * 0"
 
 env:
-  GO_VERSION: "1.23"
+  GO_VERSION: "1.27"
   GOLANGCI_LINT_VERSION: "v1.63.3"
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: ["1.23", "1.24"]
+        go-version: ["1.26", "1.27"]
 
     steps:
       - name: Checkout code
@@ -69,7 +69,7 @@ jobs:
         run: go test -v -race -coverprofile=coverage.out ./...
 
       - name: Upload coverage to Codecov
-        if: matrix.go-version == '1.24'
+        if: matrix.go-version == '1.27'
         uses: codecov/codecov-action@v5
         with:
           file: ./coverage.out
