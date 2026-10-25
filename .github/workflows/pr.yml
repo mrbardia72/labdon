@@ -1,19 +1,43 @@
-name: PR Template Check
+name: Pull Request Checks
 
 on:
   pull_request:
-    types: [opened, edited, synchronize]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
-  check-pr-template:
+  validate-pr-title:
+    name: Validate PR Title
     runs-on: ubuntu-latest
-    name: Check PR Template Usage
+    steps:
+      # Mirrors the conventional-commit patterns taught by
+      # .agents/skills/validate-pr-title (feat|fix|docs|...[(scope)]: subject).
+      - name: Check title format
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title || '';
+            const pattern = /^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?!?: .+/;
+            if (!pattern.test(title)) {
+              core.setFailed(
+                `PR title does not follow conventional commits.\n` +
+                `Got:  "${title}"\n` +
+                `Want: type(scope)?: description  e.g. "fix(app): handle nil context"`
+              );
+            }
 
+  pr-template-check:
+    name: Check PR Template Usage
+    runs-on: ubuntu-latest
     steps:
       - name: Check PR Description
         uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prBody = context.payload.pull_request.body || '';
             const prTitle = context.payload.pull_request.title || '';
@@ -121,9 +145,8 @@ jobs:
             });
 
   check-pr-size:
-    runs-on: ubuntu-latest
     name: Check PR Size
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -132,8 +155,9 @@ jobs:
 
       - name: Check PR Size
         uses: actions/github-script@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             // Get PR files
             const files = await github.rest.pulls.listFiles({

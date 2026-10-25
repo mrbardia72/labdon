@@ -1,0 +1,13 @@
+.git
+.github
+.agents
+bin
+dist
+coverage.out
+coverage.html
+test-results.xml
+*.env
+*.md
+!README.md
+Dockerfile
+docker-compose.yml

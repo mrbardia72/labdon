@@ -1,0 +1,73 @@
+# golangci-lint v1 configuration for labdon.
+# Keep in sync with the GOLANGCI_LINT_VERSION pinned in .github/workflows/ci.yml.
+
+run:
+  timeout: 10m
+  tests: true
+
+linters:
+  disable-all: true
+  enable:
+    # Correctness
+    - errcheck
+    - govet
+    - staticcheck
+    - ineffassign
+    - unused
+    - durationcheck
+    - nilerr
+    # Style / docs
+    - revive
+    - misspell
+    - godot
+    # Performance
+    - prealloc
+    # Security
+    - gosec
+    # Imports
+    - gci
+    - goimports
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  govet:
+    enable: ["shadow"]
+    disable: ["fieldalignment"]
+  revive:
+    rules:
+      - name: exported
+        arguments: ["disableStutteringCheck"]
+      - name: package-comments
+        disabled: true
+      - name: var-naming
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: increment-decrement
+      - name: range
+      - name: indent-error-flow
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: false
+  gosec:
+    excludes:
+      - G104 # Errors unhandled — covered by errcheck
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/mrbardia72/labdon)
+  goimports:
+    local-prefixes: github.com/mrbardia72/labdon
+
+issues:
+  exclude-rules:
+    # Test files may ignore some style rules.
+    - path: _test\.go
+      linters:
+        - gosec
+        - prealloc
+  fix: false

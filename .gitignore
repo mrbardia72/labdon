@@ -1,0 +1,35 @@
+# ── Build artifacts ──────────────────────────────────────────────────────────
+bin/
+dist/
+*.exe
+*.test
+*.out
+
+# ── Coverage & reports ───────────────────────────────────────────────────────
+coverage.out
+coverage.html
+*.cover
+test-results.xml
+
+# ── Go workspace / tooling ───────────────────────────────────────────────────
+go.work
+go.work.sum
+vendor/
+.golangci-lint.json
+
+# ── Local configuration & secrets (never commit these) ──────────────────────
+*.env
+.env*
+!.env.example
+config.dev.json
+dev.json
+
+# ── Editor / IDE ─────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*~
+
+# ── OS cruft ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
