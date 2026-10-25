@@ -1,96 +1,90 @@
----
-description: Contribute to mrbardia72/labdon development by creating an account on GitHub.
-image: https://opengraph.githubassets.com/dac572ac5f2210b74680ee518c8d542d76c0a2b6e3a3c5bd4255c4cbd856613d/mrbardia72/labdon
-title: GitHub - mrbardia72/labdon
----
+# ── labdon ────────────────────────────────────────────────────────────────────
 
-<!DOCTYPE html> 
+[![CI](https://github.com/mrbardia72/labdon/actions/workflows/ci.yml/badge.svg)](https://github.com/mrbardia72/labdon/actions/workflows/ci.yml)
+[![Release](https://github.com/mrbardia72/labdon/actions/workflows/release.yml/badge.svg)](https://github.com/mrbardia72/labdon/actions/workflows/release.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mrbardia72/labdon)](https://goreportcard.com/report/github.com/mrbardia72/labdon)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[Skip to content](#start-of-content) 
-
-You signed in with another tab or window. Reload to refresh your session. You signed out in another tab or window. Reload to refresh your session. You switched accounts on another tab or window. Reload to refresh your session. Dismiss alert 
-
-{{ message }}
-
-[mrbardia72 ](/mrbardia72) / **[labdon](/mrbardia72/labdon)** Public 
-
-* [ Notifications ](/login?return%5Fto=%2Fmrbardia72%2Flabdon) You must be signed in to change notification settings
-* [ Fork 0 ](/login?return%5Fto=%2Fmrbardia72%2Flabdon)
-* [ Star 0 ](/login?return%5Fto=%2Fmrbardia72%2Flabdon)
-
-[](/mrbardia72/labdon) 
-
-main
-
-[Branches](/mrbardia72/labdon/branches)[Tags](/mrbardia72/labdon/tags)
-
-Go to file
-
-Code
-
-Open more actions menu
-
-## Folders and files
-
-| Name                                                                                                      | Name                                                                                                      | Last commit message | Last commit date |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------- | ---------------- |
-| Latest commit History[4 Commits](/mrbardia72/labdon/commits/main/)4 Commits                               |                                                                                                           |                     |                  |
-| [.agents/skills](/mrbardia72/labdon/tree/main/.agents/skills "This path skips through empty directories") | [.agents/skills](/mrbardia72/labdon/tree/main/.agents/skills "This path skips through empty directories") |                     |                  |
-| [.github](/mrbardia72/labdon/tree/main/.github ".github")                                                 | [.github](/mrbardia72/labdon/tree/main/.github ".github")                                                 |                     |                  |
-| [.cursorrules](/mrbardia72/labdon/blob/main/.cursorrules ".cursorrules")                                  | [.cursorrules](/mrbardia72/labdon/blob/main/.cursorrules ".cursorrules")                                  |                     |                  |
-| [.dockerignore](/mrbardia72/labdon/blob/main/.dockerignore ".dockerignore")                               | [.dockerignore](/mrbardia72/labdon/blob/main/.dockerignore ".dockerignore")                               |                     |                  |
-| [.editorconfig](/mrbardia72/labdon/blob/main/.editorconfig ".editorconfig")                               | [.editorconfig](/mrbardia72/labdon/blob/main/.editorconfig ".editorconfig")                               |                     |                  |
-| [.gitignore](/mrbardia72/labdon/blob/main/.gitignore ".gitignore")                                        | [.gitignore](/mrbardia72/labdon/blob/main/.gitignore ".gitignore")                                        |                     |                  |
-| [AGENTS.md](/mrbardia72/labdon/blob/main/AGENTS.md "AGENTS.md")                                           | [AGENTS.md](/mrbardia72/labdon/blob/main/AGENTS.md "AGENTS.md")                                           |                     |                  |
-| [ARCHITECTURE.md](/mrbardia72/labdon/blob/main/ARCHITECTURE.md "ARCHITECTURE.md")                         | [ARCHITECTURE.md](/mrbardia72/labdon/blob/main/ARCHITECTURE.md "ARCHITECTURE.md")                         |                     |                  |
-| [CLAUDE.md](/mrbardia72/labdon/blob/main/CLAUDE.md "CLAUDE.md")                                           | [CLAUDE.md](/mrbardia72/labdon/blob/main/CLAUDE.md "CLAUDE.md")                                           |                     |                  |
-| [CODEOWNERS](/mrbardia72/labdon/blob/main/CODEOWNERS "CODEOWNERS")                                        | [CODEOWNERS](/mrbardia72/labdon/blob/main/CODEOWNERS "CODEOWNERS")                                        |                     |                  |
-| [CONTRIBUTORS.md](/mrbardia72/labdon/blob/main/CONTRIBUTORS.md "CONTRIBUTORS.md")                         | [CONTRIBUTORS.md](/mrbardia72/labdon/blob/main/CONTRIBUTORS.md "CONTRIBUTORS.md")                         |                     |                  |
-| [DECISIONS.md](/mrbardia72/labdon/blob/main/DECISIONS.md "DECISIONS.md")                                  | [DECISIONS.md](/mrbardia72/labdon/blob/main/DECISIONS.md "DECISIONS.md")                                  |                     |                  |
-| [LICENSE](/mrbardia72/labdon/blob/main/LICENSE "LICENSE")                                                 | [LICENSE](/mrbardia72/labdon/blob/main/LICENSE "LICENSE")                                                 |                     |                  |
-| [Makefile](/mrbardia72/labdon/blob/main/Makefile "Makefile")                                              | [Makefile](/mrbardia72/labdon/blob/main/Makefile "Makefile")                                              |                     |                  |
-| [README.md](/mrbardia72/labdon/blob/main/README.md "README.md")                                           | [README.md](/mrbardia72/labdon/blob/main/README.md "README.md")                                           |                     |                  |
-| [STYLEGUIDE.md](/mrbardia72/labdon/blob/main/STYLEGUIDE.md "STYLEGUIDE.md")                               | [STYLEGUIDE.md](/mrbardia72/labdon/blob/main/STYLEGUIDE.md "STYLEGUIDE.md")                               |                     |                  |
-| View all files                                                                                            |                                                                                                           |                     |                  |
-
-## Repository files navigation
-
-# labdon
+A Go service scaffold with a strict layered architecture (`app` → `business` →
+`foundation`) and a full set of AI-agent skills under `.agents/skills/` that
+teach and enforce the repo's conventions. The current code is a working
+**health-check server** intended as the foundation to build on.
 
 ## Features
 
-## About
+- 🏛️ **Layered architecture** — primitives at the edges (API JSON, DB rows),
+  strong types only in the business layer, named converters at every crossing.
+- 🤖 **Agent-ready** — `AGENTS.md`, `CLAUDE.md`, `.cursorrules`,
+  Copilot instructions, and 10+ review/authoring skills for AI coding agents.
+- 🧰 **One Makefile source of truth** — CI runs exactly what you run locally
+  (`make ci` / `make check`).
+- 🔒 **Security baked in** — gosec, govulncheck, Trivy scanning; graceful
+  shutdown and request timeouts in the server.
+- ✅ **Quality gates** — golangci-lint, race-detector tests, coverage,
+  conventional-commit PR checks, PR-size analysis.
 
-No description, website, or topics provided.
+## Requirements
 
-### Resources
+- Go **1.24+** (pinned in [`go.mod`](go.mod))
+- GNU Make
+- Optional dev tools: `golangci-lint`, `goimports`, `gosec`, `govulncheck`,
+  `staticcheck` → install with `make tools`
 
-[Readme](#readme-ov-file)
+## Quickstart
 
-[License](#License-1-ov-file)
+```bash
+git clone https://github.com/mrbardia72/labdon.git
+cd labdon
+make deps     # download modules
+make run      # start the service on :3000 (default)
+curl localhost:3000/v1/liveness
+curl localhost:3000/v1/readiness
+```
 
-[Activity](/mrbardia72/labdon/activity)
+Configure via environment variables or `config.dev.json`:
 
-### Stars
+```bash
+LABDON_WEB_HTTPREADTIMEOUT=5s LABDON_WEB_HTTPWRITE_TIMEOUT=10s LABDON_WEB_HTTPPORT=8080 make run
+```
 
-[**0** stars](/mrbardia72/labdon/stargazers)
+## Project layout
 
-### Watchers
+```
+cmd/sites            # main entrypoint (flag parsing, DI wiring, shutdown)
+app                  # HTTP layer: handlers, middleware (primitives only)
+business             # domain logic + strong types (no cross-domain imports)
+foundation           # shared infra: logger, trace, database, buildinfo
+business/sdk/errs    # typed error helpers (FieldErrors, New)
+```
 
-[**0** watching](/mrbardia72/labdon/watchers)
+Full rules: [ARCHITECTURE.md](ARCHITECTURE.md) · coding standards:
+[STYLEGUIDE.md](STYLEGUIDE.md) · decisions: [DECISIONS.md](DECISIONS.md)
 
-### Forks
+## Development
 
-[**0** forks](/mrbardia72/labdon/forks)
-
-[Report repository](/contact/report-content?content%5Furl=https%3A%2F%2Fgithub.com%2Fmrbardia72%2Flabdon&report=mrbardia72+%28user%29)
+```bash
+make help         # list all targets
+make fmt lint     # format + lint after touching .go files
+make test-only    # fast tests
+make check        # everything CI runs (tidy, fmt, vet, lint, test)
+make build-all    # cross-compile linux/darwin/windows × amd64/arm64
+make security     # gosec + govulncheck
+```
 
 ## Releases
 
-## Packages
+Push a tag to publish binaries via GitHub Release:
 
-## Contributors
+```bash
+git tag v0.1.0 && git push origin v0.1.0
+```
 
-## Languages
+## Contributing
 
-You can’t perform that action at this time.
+Read [AGENTS.md](AGENTS.md) first (it defines the repo's agent contract), then
+open a PR using one of the templates in `.github/PULL_REQUEST_TEMPLATE/`.
+PR titles must follow conventional commits — validated in CI.
+
+## License
+
+[MIT](LICENSE)

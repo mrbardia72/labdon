@@ -17,12 +17,7 @@ updates:
     # Pull request branch naming
     pull-request-branch-name:
       separator: "-"
-    # Commit message configuration
-    commit-message:
-      prefix: "deps"
-      prefix-development: "deps-dev"
-      include: "scope"
-    # Auto-merge configuration
+    # Rebase strategy
     rebase-strategy: "auto"
     # Assignees for PRs
     assignees:
@@ -48,6 +43,10 @@ updates:
         update-types: ["version-update:semver-major"]
 
     # Group related dependencies together
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
     groups:
       # Database-related dependencies
       database:

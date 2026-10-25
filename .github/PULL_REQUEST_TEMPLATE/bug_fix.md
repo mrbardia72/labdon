@@ -1,117 +1,39 @@
-# 🐛 Bug Fix Pull Request
+# Bug Fix Pull Request
 
 ## Bug Description
-<!-- Describe the bug that this PR fixes -->
 
-### What was the issue?
-- 
+**Symptom:**
+**Root cause:**
+**Impact:** (who/what is affected, severity)
 
-### How was it affecting users/system?
-- 
+- **Related issue:** Fixes #
 
-### Steps to reproduce the original bug:
-1. 
-2. 
-3. 
+## Reproduction
 
----
-
-## 🔧 Solution
-<!-- Describe how you fixed the bug -->
-
-### What did you change?
-- 
-
-### Why does this fix work?
-- 
-
-### Alternative solutions considered:
-- 
-
----
-
-## 🧪 Testing
-<!-- How did you verify the fix works? -->
-
-### Test Cases
-- [ ] Verified original bug is fixed
-- [ ] Tested edge cases
-- [ ] Regression testing completed
-- [ ] Unit tests added/updated
-
-### Before/After
-<!-- Show the behavior before and after the fix -->
-
-**Before:**
-```
-<!-- Describe or show the buggy behavior -->
+```bash
+# Steps or command that reproduced the bug before this change
 ```
 
-**After:**
-```
-<!-- Describe or show the fixed behavior -->
-```
+## Fix
 
----
+<!-- What changed and why this is the right level to fix it at (app/business/foundation)? -->
 
-## 🎯 Impact
-<!-- What areas of the codebase are affected? -->
+-
 
-### Files Changed
-- 
-- 
+## Test Coverage
 
-### Potential Side Effects
-- [ ] No side effects expected
-- [ ] Possible side effects (describe below)
-
-### Breaking Changes
-- [ ] No breaking changes
-- [ ] Breaking changes (describe below)
-
----
-
-## ✅ Verification Checklist
-
-### Code Quality
-- [ ] Code follows project standards
-- [ ] No debugging code left behind
-- [ ] Error handling improved/maintained
-- [ ] Logging added where appropriate
-
-### Testing
+- [ ] Regression test added that fails without this fix
+- [ ] Error path / edge cases covered
 - [ ] `make test` passes
-- [ ] `make lint` passes
-- [ ] Manual testing completed
-- [ ] No new test failures introduced
 
-### Documentation
-- [ ] Comments updated if needed
-- [ ] Documentation updated if needed
-- [ ] Known limitations documented
+Verification:
 
----
+```bash
+make test-only
+```
 
-## 📊 Root Cause Analysis
-<!-- Help prevent similar bugs in the future -->
+## Risk & Rollback
 
-### Why did this bug occur?
-- 
+- **Risk:** (low/medium/high — why)
+- **Rollback plan:** revert commit; no migration needed / migration reversible with down script
 
-### How can we prevent similar bugs?
-- 
-
-### Should we add monitoring/alerts?
-- 
-
----
-
-## 🔗 Related Issues
-<!-- Link related issues, discussions, or documentation -->
-
-- Fixes #
-- Related to #
-
----
-
-*This bug fix has been tested and verified to resolve the issue without introducing new problems.*

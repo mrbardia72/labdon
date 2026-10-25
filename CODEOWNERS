@@ -1,0 +1,11 @@
+# Default owners for everything in the repository.
+# Syntax: <pattern> <owner1> <owner2> ...
+# See https://docs.github.com/code-security/repository-management/configure-repository-for-contributions/code-owners
+
+*                       @mrbardia72
+
+/.github/               @mrbardia72
+/.agents/               @mrbardia72
+/foundation/            @mrbardia72
+/business/              @mrbardia72
+/app/                   @mrbardia72

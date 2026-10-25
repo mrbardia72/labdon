@@ -1,23 +1,21 @@
-# Pull Request - Simple Template
+# Simple Change
 
 ## Summary
-<!-- Brief description of what this PR does -->
 
-## Changes
-- 
-- 
-- 
+<!-- One or two sentences: what and why. -->
 
-## Type
-- [ ] 🐛 Bug Fix
-- [ ] ✨ Feature
-- [ ] 📚 Documentation
-- [ ] 🧹 Cleanup/Refactor
+- [ ] Docs only
+- [ ] Comment/typo fix
+- [ ] Small refactor (no behavior change)
+- [ ] Config/CI tweak
 
-## Testing
-- [ ] Tests pass (`make test`)
-- [ ] Linter passes (`make lint`)
-- [ ] Manual testing done
+## Verification
 
-## Notes
-<!-- Any additional context or considerations -->
+- [ ] `make fmt-check vet` passes (or `make check` if Go files changed)
+- [ ] Relevant tests still pass (`make test-only`)
+
+## Checklist
+
+- [ ] No functional change beyond the summary above
+- [ ] No secrets committed
+
